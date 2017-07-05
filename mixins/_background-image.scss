@@ -1,0 +1,68 @@
+@function bi-get-repeat($options) {
+  $repeat: map_get($options, repeat);
+
+  @if $repeat == no-repeat {
+    @return no-repeat;
+  }
+  @else {
+    @if $repeat == repeat or $repeat == true {
+      @return repeat;
+    }
+    @else {
+      @return repeat-#{$repeat};
+    }
+  }
+}
+
+
+@mixin bi($name, $opts: ()) {
+  $default_options: (ext: png, s: false, sizes: false, repeat: no-repeat, debug: false, retina: false, sprite: false);
+  $options: map_merge($default_options, $opts);
+
+
+  // image name with extension
+  $image_name_with_extension: "#{$name}.#{map_get($options, ext)}";
+  $image_name_2x_with_extension: "#{$name}@2x.#{map_get($options, ext)}";
+
+
+  //@if map_get($options, sizes) or map_get($options, s) {
+  //  width: image-width($image_name_with_extension);
+  //  height: image-height($image_name_with_extension);
+  //}
+
+  background-image: url($image_name_with_extension);
+  @if map_get($options, repeat) != false {
+    background-repeat: bi-get-repeat($options);
+  }
+
+
+  @if map_get($options, retina) == true {
+    @include is-retina {
+      //background-size: hidpi-image-width($image_name_2x_with_extension) hidpi-image-height($image_name_2x_with_extension);
+      background-image: url($image_name_2x_with_extension);
+      @if map_get($options, repeat) != false {
+        background-repeat: bi-get-repeat($options);
+      }
+    }
+  }
+}
+
+@mixin bi-png($name, $opts: ()) {
+  @include bi($name, map_merge((ext: png), $opts));
+}
+
+@mixin bi-jpg($name, $opts: ()) {
+  @include bi($name, map_merge((ext: jpg), $opts));
+}
+
+@mixin bi-svg($name, $opts: ()) {
+  @include bi($name, map_merge((ext: svg), $opts));
+}
+
+@mixin bi-gif($name, $opts: ()) {
+  @include bi($name, map_merge((ext: gif), $opts));
+}
+
+@mixin bi-webp($name, $opts: ()) {
+  @include bi($name, map_merge((ext: webp), $opts));
+}
