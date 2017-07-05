@@ -21,8 +21,8 @@
 
 
   // image name with extension
-  $image_name_with_extension: "#{$name}.#{map_get($options, ext)}";
-  $image_name_2x_with_extension: "#{$name}@2x.#{map_get($options, ext)}";
+  $image_name_with_extension: "../../../img/#{$name}.#{map_get($options, ext)}";
+  $image_name_2x_with_extension: "../../../img/#{$name}@2x.#{map_get($options, ext)}";
 
 
   //@if map_get($options, sizes) or map_get($options, s) {
